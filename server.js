@@ -60,7 +60,8 @@ router.route('/categories/:id')
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', router);
-
+// Add front-end routing
+app.use('/', express.static('dist'));
 // START THE SERVER
 // =============================================================================
 app.listen(port);
