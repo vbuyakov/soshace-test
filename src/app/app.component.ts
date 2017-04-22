@@ -10,7 +10,7 @@ import {CategoriesService} from "./categories.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'SOSHACE Test App';
+
 
   currentModal: ModalDirective;
   confirmData: any;
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   @ViewChild('editProductDlgModal') public editProductDlgModal: ModalDirective;
 
   public categories: any = {};
-  public products: any = {};
   public editedProduct: any = {};
 
   public categoryFilter: string = 'all';
@@ -49,7 +48,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  editProductDlg(product:any) {
+  editProductDlg(product: any) {
     this.editedProduct = product;
     this.currentModal = this.editProductDlgModal;
     this.editProductDlgModal.show();
@@ -91,13 +90,11 @@ export class AppComponent implements OnInit {
 
   setCategoryFilter(categoryId) {
     this.categoryFilter = categoryId;
+    this.reloadProducts();
   }
 
   reloadProducts() {
-    this.productsSrv.getProducts(this.categoryFilter).subscribe((res)=>{
-      console.log(res);
-
-    });
+    this.productsSrv.getProducts(this.categoryFilter).subscribe();
 
   }
 
@@ -106,7 +103,7 @@ export class AppComponent implements OnInit {
       this.categories = res;
     });
 
-    this.categoriesSrv.getCategories().subscribe((res) => {
-    });
+    this.categoriesSrv.getCategories().subscribe();
+    this.reloadProducts();
   }
 }

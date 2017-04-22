@@ -77,12 +77,12 @@ export class ProductEditorComponent implements OnInit, OnChanges {
       return;
     }
 
-    value['buyingPrice'] = value['buyingPrice'].replace(',', '.');
-    value['sellingPrice'] = value['sellingPrice'].replace(',', '.');
+    value['buyingPrice'] = String(value['buyingPrice']).replace(',', '.');
+    value['sellingPrice'] = String(value['sellingPrice']).replace(',', '.');
 
 
     this.productsSrv.saveProduct(value).subscribe((res) => {
-
+      this.productsSrv.getProducts(this.currentCategory).subscribe();
       this.reinitForm();
       this.dialog.hide();
 

@@ -8,16 +8,17 @@ import "rxjs/add/observable/of";
 @Injectable()
 export class ProductsService {
 
-  public checkProductsUpdate: Subject<any> = new BehaviorSubject<any>({});
-  public products: any = {};
+  public checkProductsUpdate: Subject<any> = new BehaviorSubject<any>([]);
+  public products: any = [];
 
 
   constructor(private http: Http) {
 
   }
 
-  public getProducts(categoryId: string = 'any') {
-    let url =  '/api/products';
+  public getProducts(categoryId: string = 'all') {
+
+    let url =  '/api/products'+((categoryId!='all')?'/category='+categoryId:'');
     return this.http.get(url).map((res: Response) => {
       this.products = res.json();
       this.checkProductsUpdate.next(this.products); //Emit to recievers -  Category list chnged
