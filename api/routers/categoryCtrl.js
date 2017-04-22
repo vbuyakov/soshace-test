@@ -4,85 +4,94 @@ var Product = require('../models/product');
 
 module.exports = {
 
-    getCategories: function (req, res) {
+  getCategories: function (req, res) {
 
-        Category.find({}, function (err, categories) {
-            if (err)
-                res.status(500).send(err);
+    Category.find({}, function (err, categories) {
+      if (err)
+        res.status(500).send(err);
+      var categoriesMap = {};
+      for (var ci = 0; ci < categories.length; ci++) {
+        categoriesMap[categories[ci]._id] = categories[ci];
+      }
 
-            res.json(categories);
+      categoriesMap['empty'] = {
+        _id: 'empty',
+        name: 'Без категории'
+      };
 
-        })
-    },
+      res.json(categoriesMap);
 
-    getCategory: function (req, res) {
-        var id = req.params.id;
+    });
+  },
 
-        Category.findById(id,
-            function (err, category) {
-            if (err)
-                    res.status(500).send(err);
+  getCategory: function (req, res) {
+    var id = req.params.id;
 
-                res.json(category);
-            });
-    },
+    Category.findById(id,
+      function (err, category) {
+        if (err)
+          res.status(500).send(err);
 
-    addCategory(req, res)
-    {
-        var categoryData = req.body;
-        var category = new Category();
+        res.json(category);
+      });
+  },
+
+  addCategory(req, res)
+  {
+    var categoryData = req.body;
+    var category = new Category();
+    category.name = categoryData['name'];
+
+    category.save(function (err) {
+      if (err)
+        res.status(400).json({'err': err});
+
+      res.status(201).json({id: category._id});
+    })
+
+  },
+
+  saveCategory(req, res, CategoryData)
+  {
+    var categoryData = req.params.CategoryData;
+    if (!categoryData)  return res.status(400).json({'err': 'Empty data'});
+
+    Category.findById(id,
+      function (err, category) {
+        if (err)
+          res.status(400).send(err);
+
         category.name = categoryData['name'];
-
         category.save(function (err) {
-            if (err)
-                res.status(400).json({'err': err});
+          if (err)
+            res.status(400).json({'err': err});
 
-            res.status(201).json({id: category._id});
+          res.status(201).json({id: category._id});
         })
+      });
+  },
 
-    },
+  deleteCategory(req, res, id)
+  {
+    var id = req.params.id;
 
-    saveCategory(req, res, CategoryData)
-    {
-        var categoryData = req.params.CategoryData;
-        if (!categoryData)  return res.status(400).json({'err': 'Empty data'});
-
-        Category.findById(id,
-            function (err, category) {
-                if (err)
-                    res.status(400).send(err);
-
-                category.name = categoryData['name'];
-                category.save(function (err) {
-                    if (err)
-                        res.status(400).json({'err': err});
-
-                    res.status(201).json({id: category._id});
-                })
-            });
-    },
-
-    deleteCategory(req, res, id)
-    {
-        var id = req.params.id;
-
-        Product.update({"categoryId":id},{"categoryId":null},{ multi: true }, function (err,raw) {
-            if (err)
-                res.status(500).json({'err': err});
+    Product.update({"categoryId": id}, {"categoryId": null}, {multi: true}, function (err, raw) {
+      if (err)
+        res.status(500).json({'err': err});
 
 
-            Category.remove({_id: id}, function (err) {
-                if (err)
-                    res.status(500).json({'err': err});
+      Category.remove({_id: id}, function (err) {
+        if (err)
+          res.status(500).json({'err': err});
 
-                res.json({
-                    status: 'ok'
-                });
-            })
-            
-        })
+        res.json({
+          status: 'ok'
+        });
+      })
+
+    })
 
 
-    }
+  }
 
 }

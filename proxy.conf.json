@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://ocart2.loc:3055",
+    "secure": false
+  }
+
+}

@@ -1,0 +1,9 @@
+.row {
+  position: relative;
+}
+
+.bottom-align-text {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
