@@ -73,6 +73,10 @@ module.exports = {
             function (err, product) {
                 if (err)
                     res.status(400).send(err);
+                if(product == null)
+                {
+                  product = new Product();
+                }
 
                 product.name = productData['name'];
                 product.buyingPrice = parseFloat(productData['buyingPrice']);

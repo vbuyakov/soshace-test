@@ -1,3 +1,99 @@
-<p>
-  product-editor works!
-</p>
+<div class="modal-dialog modal-sm">
+  <div class="modal-content">
+    <div class="modal-header">
+
+      <h6 *ngIf="cForm.get('_id').value" class="modal-title pull-left">Редактировать продукт iD: {{cForm.get('_id').value}}</h6>
+      <h6 *ngIf="!cForm.get('_id').value" class="modal-title pull-left">Создать продукт</h6>
+
+
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeDlg()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="cForm" (ngSubmit)="onSubmit(cForm.value)">
+
+        <div class="form-group">
+          <label for="name">Категория продукта:</label>
+          <select  name="categoryId" id="categoryId"  [formControl]="cForm.controls['categoryId']"
+                   class="form-control gray_input "
+                   placeholder="Выберите категорию">
+              <option *ngFor="let item of categoriesArr"
+
+                      value="{{item._id}}">{{item.name}}</option>
+          </select>
+
+
+
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">Название продукта:</label>
+          <div>
+          <span class="error-message"
+                *ngIf="cForm.get('name').hasError('required') && cForm.get('name').touched">Пожалуйста, введитe название продукта</span>
+          </div>
+          <input type="text" placeholder="Название продукта" name="name" id="name"
+                 class="form-control gray_input "
+                 [class.error-component]="!cForm.get('name').valid && cForm.get('name').touched"
+                 [formControl]="cForm.controls['name']">
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="buyingPrice">Закупочная стоимость:</label>
+          <div>
+          <span class="error-message"
+                *ngIf="cForm.get('buyingPrice').hasError('required') && cForm.get('buyingPrice').touched">
+            Введитe значение</span>
+            <span class="error-message"
+                  *ngIf="cForm.get('buyingPrice').hasError('pattern') && cForm.get('buyingPrice').touched">
+            Введите числовое значение</span>
+
+
+          </div>
+          <input type="text" placeholder="Закупочная стоимость" buyingPrice="buyingPrice" id="buyingPrice"
+                 class="form-control gray_input "
+                 [class.error-component]="!cForm.get('buyingPrice').valid && cForm.get('buyingPrice').touched"
+                 [formControl]="cForm.controls['buyingPrice']">
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="sellingPrice">Розничная цена:</label>
+          <div>
+          <span class="error-message"
+                *ngIf="cForm.get('sellingPrice').hasError('required') && cForm.get('sellingPrice').touched">
+            Введитe значение</span>
+            <span class="error-message"
+                  *ngIf="cForm.get('sellingPrice').hasError('pattern') && cForm.get('sellingPrice').touched">
+            Введите числовое значение</span>
+
+
+          </div>
+          <input type="text" placeholder="Розничная цена" sellingPrice="sellingPrice" id="sellingPrice"
+                 class="form-control gray_input "
+                 [class.error-component]="!cForm.get('sellingPrice').valid && cForm.get('sellingPrice').touched"
+                 [formControl]="cForm.controls['sellingPrice']">
+
+        </div>
+
+
+        <div>
+          <button class="btn btn-primary" type="submit">
+            <span *ngIf="!cForm.get('_id').value"> Добавить </span>
+            <span *ngIf="cForm.get('_id').value"> Сохранить </span>
+
+          </button>
+          <button class="btn" (click)="closeDlg()" type="button"> Отмена</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

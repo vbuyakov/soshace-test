@@ -7,26 +7,22 @@
       <img src="assets/logo.png" style="width: 100px;">
     </div>
     <div class="col-md-9 bottom-align-text ">
-      <button type="button" class="btn btn-primary">Добавить товар</button>
+      <button type="button" class="btn btn-primary" (click)="editProductDlg({_id:'58fb8abbbca4db5541819e81'})">Добавить товар</button>
       <button type="button" class="btn btn-primary"  (click)="createCategoryDlg()">Добавить категорию</button>
 
 
-      <button type="button" class="btn btn-primary" (click)="deleteProductDlg({_id:'prodasdas98769876'})">Delete product</button>
+      <button type="button" class="btn btn-primary" (click)="deleteProductDlg({_id:'58fb8abbbca4db5541819e81'})">Delete product</button>
     </div>
 
   </div>
 
   <div class="row">
-
     <div class="col-md-3">
-
       <app-categories-list  (deleteHandler)="deleteCategoryDlg($event)" (setCurrentCategoryHandler)="setCategoryFilter($event)" [currentCategory]="categoryFilter" ></app-categories-list>
-
     </div>
-
     <div class="col-md-9">
 
-
+      <app-products-list></app-products-list>
 
 
 
@@ -61,11 +57,16 @@
 
 <!-- Modals -->
 <div bsModal #deleteConfirmModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModal"
-     aria-hidden="true">
+     aria-hidden="true" [config]="{backdrop: 'static'}">
   <app-delete-confirm (deleteItem)="deleteItem($event)" [dialog]="currentModal" [confirmData]="confirmData" ></app-delete-confirm>
 </div>
 
 <div bsModal #addCategoryDlgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addCategoryDlgModal"
-     aria-hidden="true">
+     aria-hidden="true" [config]="{backdrop: 'static'}">
   <app-category-editor  [dialog]="currentModal"  ></app-category-editor>
+</div>
+
+<div bsModal #editProductDlgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addCategoryDlgModal"
+     aria-hidden="true" [config]="{backdrop: 'static'}">
+  <app-product-editor  [dialog]="currentModal" [currentCategory]="categoryFilter"  [currentProduct]="editedProduct" ></app-product-editor>
 </div>

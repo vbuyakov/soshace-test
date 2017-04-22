@@ -17,8 +17,12 @@ export class AppComponent implements OnInit {
 
   @ViewChild('deleteConfirmModal') public deleteConfirmModal: ModalDirective;
   @ViewChild('addCategoryDlgModal') public addCategoryDlgModal: ModalDirective;
+  @ViewChild('editProductDlgModal') public editProductDlgModal: ModalDirective;
+
   public categories: any = {};
   public products: any = {};
+  public editedProduct: any = {};
+
   public categoryFilter: string = 'all';
 
 
@@ -37,11 +41,20 @@ export class AppComponent implements OnInit {
 
         break;
       case  'product':
-        this.productsSrv.delete(item.id);
-        break;
+        this.productsSrv.delete(item._id).subscribe(res => {
+          this.reloadProducts();
+        });
     }
 
   }
+
+
+  editProductDlg(product:any) {
+    this.editedProduct = product;
+    this.currentModal = this.editProductDlgModal;
+    this.editProductDlgModal.show();
+  }
+
 
   createCategoryDlg() {
     this.currentModal = this.addCategoryDlgModal;
@@ -81,11 +94,15 @@ export class AppComponent implements OnInit {
   }
 
   reloadProducts() {
+    this.productsSrv.getProducts(this.categoryFilter).subscribe((res)=>{
+      console.log(res);
+
+    });
 
   }
 
   ngOnInit() {
-    this.categoriesSrv.checkCategorisUpdate.subscribe((res) => {
+    this.categoriesSrv.checkCategoriesUpdate.subscribe((res) => {
       this.categories = res;
     });
 

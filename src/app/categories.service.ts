@@ -8,7 +8,7 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class CategoriesService {
 
-  public checkCategorisUpdate: Subject<any> = new BehaviorSubject<any>({});
+  public checkCategoriesUpdate: Subject<any> = new BehaviorSubject<any>({});
 
   public categories: any = {};
 
@@ -20,16 +20,16 @@ export class CategoriesService {
     return this.http.get('/api/categories').map((res: Response) => {
       this.categories = res.json();
 
-      this.checkCategorisUpdate.next(this.categories); //Emit to recievers -  Category list chnged
+      this.checkCategoriesUpdate.next(this.categories); //Emit to recievers -  Category list chnged
       return this.categories;
     }).catch(this.handleError);
   }
 
   public delete(id) {
-    //vTODO: Сделать удаление на сервере
+
     return this.http.delete('/api/categories/'+id).map((res:Response) => {
       delete this.categories[id];
-      this.checkCategorisUpdate.next(this.categories); //Emit to recievers -  Category list chnged
+      this.checkCategoriesUpdate.next(this.categories); //Emit to recievers -  Category list chnged
       res.json();
     })
   }

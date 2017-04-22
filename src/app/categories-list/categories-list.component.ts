@@ -16,7 +16,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoriesSrv.checkCategorisUpdate.subscribe((res) => {
+    this.categoriesSrv.checkCategoriesUpdate.subscribe((res) => {
       this.categories = res;
       let keys = [];
       for(let key in this.categories) {
