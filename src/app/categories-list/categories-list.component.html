@@ -1,3 +1,18 @@
-<p>
-  categories-list works!
-</p>
+<ul class="list-group">
+
+  <li class="list-group-item" [ngClass]="{'active':(currentCategory == 'all')}"
+      (click)="setCurrentCategory('all')"
+  >Все категории
+  </li>
+  <li class="list-group-item" *ngFor="let item of categoriesArr"
+      [ngClass]="{'active':(currentCategory == item._id)}"
+      (click)="setCurrentCategory(item._id)">
+    <button *ngIf="item._id != 'empty'" class="btn btn-warning btn-sm mr-1"
+            (click)="deleteCategory(item)">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
+
+    {{item.name}}
+  </li>
+
+</ul>

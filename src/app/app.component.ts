@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   public categories: any = {};
   public products: any = {};
-  public categoryFilter: string = null;
+  public categoryFilter: string = 'all';
 
 
   constructor(private  productsSrv: ProductsService, private  categoriesSrv: CategoriesService) {
@@ -28,7 +28,11 @@ export class AppComponent implements OnInit {
   deleteItem(item: any) {
     switch (item.type) {
       case 'category':
-        this.categoriesSrv.delete(item.id);
+        if (item._id == this.categoryFilter) {
+          this.categoryFilter = 'empty';
+        }
+        this.categoriesSrv.delete(item._id);
+        this.reloadProducts();
         break;
       case  'product':
         this.productsSrv.delete(item.id);
@@ -37,24 +41,26 @@ export class AppComponent implements OnInit {
 
   }
 
-  deleteCategory(category) {
+
+
+  deleteCategoryDlg(category) {
     this.currentModal = this.deleteConfirmModal;
     this.confirmData = {
       type: 'category',
       title: 'Хотите удалить категорию ?',
       descr: 'Все товары в этой категории будут помечены без категории',
-      id: category._id
+      _id: category._id
     };
     this.deleteConfirmModal.show();
   }
 
-  deleteProduct(product) {
+  deleteProductDlg(product) {
     this.currentModal = this.deleteConfirmModal;
     this.confirmData = {
       type: 'product',
       title: 'Хотите удалить продукт ?',
       descr: `Точно удалить товар с id ${product._id}`,
-      id: product._id
+      _id: product._id
     };
     this.deleteConfirmModal.show();
   }
@@ -64,15 +70,21 @@ export class AppComponent implements OnInit {
     modal.hide();
   }
 
+
+  setCategoryFilter(categoryId) {
+    this.categoryFilter = categoryId;
+  }
+
+  reloadProducts() {
+
+  }
+
   ngOnInit() {
-    console.log('INIT ROOT COMPONENT');
     this.categoriesSrv.checkCategorisUpdate.subscribe((res) => {
-      console.log("geted:",res);
       this.categories = res;
     });
 
-    this.categoriesSrv.getCategories().subscribe((res)=>{
-
+    this.categoriesSrv.getCategories().subscribe((res) => {
     });
   }
 }

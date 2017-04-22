@@ -6,23 +6,21 @@
     <div class="col-md-3">
       <img src="assets/logo.png" style="width: 100px;">
     </div>
-    <div class="col-md-9 bottom-align-text text-center">
-      <button type="button" class="btn btn-primary" (click)="deleteCategory({_id:'58f9e677a06b363e5c8ad53d'})">Delete category</button>
-      <button type="button" class="btn btn-primary" (click)="deleteProduct({_id:'prodasdas98769876'})">Delete product</button>
+    <div class="col-md-9 bottom-align-text ">
+      <button type="button" class="btn btn-primary">Добавить товар</button>
+      <button type="button" class="btn btn-primary">Добавить категорию</button>
+
+      
+      <button type="button" class="btn btn-primary" (click)="deleteProductDlg({_id:'prodasdas98769876'})">Delete product</button>
     </div>
-    <i class="glyphicon glyphicon-star" title="one"></i>
+
   </div>
 
   <div class="row">
 
     <div class="col-md-3">
 
-      <ul class="list-group">
-        <li class="list-group-item active">First item</li>
-        <li class="list-group-item"><i class="fa fa-trash" aria-hidden="true"></i>
-          Second item</li>
-        <li class="list-group-item">Third item</li>
-      </ul>
+      <app-categories-list  (deleteHandler)="deleteCategoryDlg($event)" (setCurrentCategoryHandler)="setCategoryFilter($event)" [currentCategory]="categoryFilter" ></app-categories-list>
 
     </div>
 

@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {Angular2FontAwesomeModule} from 'angular2-font-awesome';
+
+
 
 import { AppComponent } from './app.component';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -32,6 +35,7 @@ import {CategoriesService} from './categories.service';
     BrowserModule,
     FormsModule,
     HttpModule,
+    Angular2FontAwesomeModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot()
   ],

@@ -23,7 +23,7 @@ export class DeleteConfirmComponent implements OnInit {
 
 
   confirmDelete() {
-    this.deleteItem.emit({type: this.confirmData.type, id: this.confirmData.id});
+    this.deleteItem.emit({type: this.confirmData.type, _id: this.confirmData._id});
     this.dialog.hide();
   }
 
