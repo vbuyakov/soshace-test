@@ -1,3 +1,31 @@
-<p>
-  category-editor works!
-</p>
+<div class="modal-dialog modal-sm">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h6 class="modal-title pull-left">Создать категорию</h6>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeDlg()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="cForm" (ngSubmit)="onSubmit(cForm.value)">
+
+      <div class="mb-3">
+        <span class="error-message"
+              *ngIf="cForm.get('name').hasError('required') && cForm.get('name').touched">Пожалуйста, введитe название категории</span>
+        <input type="text" placeholder="Название категории" name="name" id="name"
+        class="form-control gray_input "
+        [class.error-component]="!cForm.get('name').valid && cForm.get('name').touched"
+        [formControl]="cForm.controls['name']">
+
+      </div>
+
+      <div>
+        <button class="btn btn-primary" type="submit"> Добавить </button>
+        <button class="btn" (click)="closeDlg()" type="button"> Отмена</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>

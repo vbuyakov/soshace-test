@@ -1,18 +1,20 @@
 <ul class="list-group">
 
-  <li class="list-group-item" [ngClass]="{'active':(currentCategory == 'all')}"
-      (click)="setCurrentCategory('all')"
-  >Все категории
+  <li class="list-group-item" [ngClass]="{'active':(currentCategory == 'all')}">
+    <a (click)="setCurrentCategory('all')" style="cursor: pointer">
+      Все категории
+    </a>
   </li>
+
   <li class="list-group-item" *ngFor="let item of categoriesArr"
-      [ngClass]="{'active':(currentCategory == item._id)}"
-      (click)="setCurrentCategory(item._id)">
+      [ngClass]="{'active':(currentCategory == item._id)}">
     <button *ngIf="item._id != 'empty'" class="btn btn-warning btn-sm mr-1"
             (click)="deleteCategory(item)">
       <i class="fa fa-trash" aria-hidden="true"></i>
     </button>
-
-    {{item.name}}
+    <a (click)="setCurrentCategory(item._id)">
+      {{item.name}}
+    </a>
   </li>
 
 </ul>

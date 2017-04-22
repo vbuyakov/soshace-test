@@ -26,8 +26,19 @@ export class CategoriesService {
   }
 
   public delete(id) {
-    delete this.categories[id];
-    this.checkCategorisUpdate.next(this.categories); //Emit to recievers -  Category list chnged
+    //vTODO: Сделать удаление на сервере
+    return this.http.delete('/api/categories/'+id).map((res:Response) => {
+      delete this.categories[id];
+      this.checkCategorisUpdate.next(this.categories); //Emit to recievers -  Category list chnged
+      res.json();
+    })
+  }
+
+  public create(category)
+  {
+    return this.http.post('/api/categories', category).map((res: Response) => {
+      return this.getCategories().subscribe();
+    }).catch(this.handleError);
   }
 
 

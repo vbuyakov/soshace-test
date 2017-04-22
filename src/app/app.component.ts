@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   confirmData: any;
 
   @ViewChild('deleteConfirmModal') public deleteConfirmModal: ModalDirective;
-
+  @ViewChild('addCategoryDlgModal') public addCategoryDlgModal: ModalDirective;
   public categories: any = {};
   public products: any = {};
   public categoryFilter: string = 'all';
@@ -31,8 +31,10 @@ export class AppComponent implements OnInit {
         if (item._id == this.categoryFilter) {
           this.categoryFilter = 'empty';
         }
-        this.categoriesSrv.delete(item._id);
-        this.reloadProducts();
+        this.categoriesSrv.delete(item._id).subscribe(res => {
+          this.reloadProducts();
+        });
+
         break;
       case  'product':
         this.productsSrv.delete(item.id);
@@ -41,7 +43,10 @@ export class AppComponent implements OnInit {
 
   }
 
-
+  createCategoryDlg() {
+    this.currentModal = this.addCategoryDlgModal;
+    this.addCategoryDlgModal.show();
+  }
 
   deleteCategoryDlg(category) {
     this.currentModal = this.deleteConfirmModal;
