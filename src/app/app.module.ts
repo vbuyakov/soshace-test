@@ -17,6 +17,7 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
 
 import {ProductsService} from './products.service';
 import {CategoriesService} from './categories.service';
+import { MongoidPipe } from './mongoid.pipe';
 
 
 
@@ -28,7 +29,8 @@ import {CategoriesService} from './categories.service';
     CategoriesListComponent,
     CategoryEditorComponent,
     ProductEditorComponent,
-    DeleteConfirmComponent
+    DeleteConfirmComponent,
+    MongoidPipe
 
   ],
   imports: [

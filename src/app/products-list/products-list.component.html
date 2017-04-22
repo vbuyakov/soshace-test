@@ -10,7 +10,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let item of productsArr">
-    <td><a [title]="item._id">{{formatId(item._id)}}</a> </td>
+    <td><a [title]="item._id">{{item._id | mongoid}}</a> </td>
     <td>{{item.name}}</td>
     <td>{{item.buyingPrice}}</td>
     <td>{{item.sellingPrice}}</td>
