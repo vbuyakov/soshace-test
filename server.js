@@ -16,8 +16,9 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 3055; // set our port
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/soshace');
 
+mongoose.connect('mongodb://localhost/soshace');
+mongoose.Promise = require('bluebird');
 
 // ROUTES FOR  API
 // =============================================================================
